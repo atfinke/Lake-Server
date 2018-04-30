@@ -1,0 +1,53 @@
+<html>
+<style type="text/css">
+  body {
+    background-color: #4591d0;
+    padding: 20px;
+    font-family: -apple-system;
+    color: white;
+  }
+
+  h1 {
+    font-size: 65px;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+  }
+
+  span {
+    line-height: 20px;
+    padding-bottom: 20px;
+    font-family: -apple-system;
+  }
+</style>
+
+<body>
+  <h1>Lake Server</h1>
+  <pre><span id='output-text'></span></pre>
+  <script>
+    var HOST = location.origin.replace(/^http/, 'ws')
+    var ws = new WebSocket(HOST);
+    var element = document.getElementById('output-text');
+
+    ws.onmessage = function(event) {
+      var date = new Date();
+      var dateString = date.toLocaleTimeString();
+      if (event.data instanceof Blob) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          var jsonPretty = JSON.stringify(JSON.parse(this.result), null, '\t');
+          var newText = dateString + "<br>" + jsonPretty;
+          element.innerHTML = element.innerHTML + "<br><br>" + newText;
+        };
+        reader.readAsText(event.data);
+      } else if (event.data.includes(' Connected')) {
+        var newText = dateString + ": " + event.data;
+        element.innerHTML = element.innerHTML + "<br><br>" + newText;
+      } else {
+        console.log(event.data);
+      }
+    };
+  </script>
+</body>
+
+</html>
