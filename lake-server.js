@@ -26,6 +26,7 @@ wss.on('connection', function connection(ws) {
 const interval = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
     ws.send("KEEP_ALIVE");
-    console.log("SENDING KEEP_ALIVE");
   });
+  console.log("SENDING KEEP_ALIVE");
+  console.log(wss.clients.length);
 }, 10000);
