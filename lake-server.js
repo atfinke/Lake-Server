@@ -34,7 +34,14 @@ function heartbeat() {
 
 const interval = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
-    if (ws.isAlive === false) return ws.terminate();
+    if (ws.isAlive === false) {
+      wss.clients.forEach(function each(client) {
+        if (client !== ws) {
+          client.send("LAKE_SERVER_DEVICE_DISCONNECT");
+        }
+      });
+      return ws.terminate();
+    }
 
     ws.isAlive = false;
     ws.ping(noop);
