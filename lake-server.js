@@ -40,11 +40,13 @@ const interval = setInterval(function ping() {
           client.send("LAKE_SERVER_DEVICE_DISCONNECT");
         }
       });
+      console.log("KILLING");
       return ws.terminate();
     }
 
     ws.isAlive = false;
     ws.ping(noop);
     ws.send("KEEP_ALIVE");
+    console.log("PINGING");
   });
 }, 10000);
