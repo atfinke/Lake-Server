@@ -45,5 +45,6 @@ const interval = setInterval(function ping() {
 
     ws.isAlive = false;
     ws.ping(noop);
+    ws.send("KEEP_ALIVE");
   });
 }, 10000);
