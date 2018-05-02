@@ -15,9 +15,8 @@ const wss = new SocketServer({
   server
 });
 
-var connectionPairCodes = [];
-var connectionDeviceNames = [];
-var lakeServerViewer = ""
+var connectionPairCodes = {};
+var connectionDeviceNames = {};
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
@@ -54,17 +53,15 @@ wss.on('connection', function connection(ws) {
               var clientName = params[4];
               connectionDeviceNames[clientAddress] = clientName;
 
-              console.log("New Pair Code");
-              console.log(clientAddress);
-              console.log(clientName);
-              console.log(pairCode);
-              console.log("-------");
-
               sendClientConnected(clientAddress, pairCode);
 
-              if (pairCode == "SERVER_VIEWER") {
-                  lakeServerViewer = clientAddress
-              }
+              var statusString = "New Pair Code:";
+              statusString += clientAddress;
+              statusString += clientName;
+              statusString += pairCode;
+              statusString += String("-------");
+              sendServerViewerStatus(statusString);
+
             } else {
               console.log("Unsupported messageType");
             }
@@ -87,10 +84,11 @@ function sendClientConnected(newClientAddress, pairCode) {
         var key = "LAKE_SERVER|client|newClient|" + deviceName
         client.send(data);
 
-        console.log("Sending existing client new client info");
-        console.log(clientAddress);
-        console.log(newClientAddress);
-        console.log("-------");
+        var statusString = "Sending existing client new client info:";
+        statusString += clientAddress;
+        statusString += newClientAddress;
+        statusString += String("-------");
+        sendServerViewerStatus(statusString);
       }
     }
   });
@@ -110,11 +108,14 @@ const interval = setInterval(function ping() {
       clientsToRemove.push(clientAddress)
       var pairCode = connectionPairCodes[clientAddress];
       var deviceName = connectionDeviceNames[clientAddress];
-      console.log("CLIENT DISCONNECTED:");
-      console.log(clientAddress);
-      console.log(pairCode);
-      console.log(deviceName);
-      console.log("-------");
+
+      var statusString = "CLIENT DISCONNECTED:\n"
+      statusString += clientAddress + "\n"
+      statusString += pairCode + "\n"
+      statusString += deviceName + "\n"
+      statusString += String("-------")
+
+      sendServerViewerStatus(statusString);
     }
   }
 
@@ -125,20 +126,8 @@ for (var index = 0; index < clientsToRemove.length; index++) {
   }
 }, 10000);
 
-setInterval(function ping() {
-  var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
-  statusString += JSON.stringify(connectionDeviceNames) + "\n"
-  statusString += JSON.stringify(connectionPairCodes) + "\n"
-  statusString += String("-------")
-
-  if (wss.clients.length != 0) {
-    console.log(statusString);
-    console.log(connectionDeviceNames);
-    console.log(connectionPairCodes);
-    console.log(JSON.stringify(connectionPairCodes));
-  }
-
-  var message = "LAKE_SERVER|server|status|" + statusString;
+function sendServerViewerStatus(status) {
+  var message = "LAKE_SERVER|server|status|" + status;
 
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
@@ -149,4 +138,20 @@ setInterval(function ping() {
     }
   });
 
+  if (wss.clients.length != 0) {
+    console.log(status);
+  }
+}
+
+setInterval(function ping() {
+  var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
+  statusString += JSON.stringify(connectionDeviceNames) + "\n"
+  statusString += JSON.stringify(connectionPairCodes) + "\n"
+  statusString += String("-------")
+
+  if (wss.clients.length != 0) {
+    console.log(statusString);
+  }
+
+  sendServerViewerStatus(statusString);
 }, 30000);
