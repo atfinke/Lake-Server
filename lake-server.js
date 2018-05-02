@@ -147,11 +147,7 @@ setInterval(function ping() {
   var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
   statusString += JSON.stringify(connectionDeviceNames) + "\n"
   statusString += JSON.stringify(connectionPairCodes) + "\n"
-  statusString += String("-------")
-
-  if (wss.clients.length != 0) {
-    console.log(statusString);
-  }
+  statusString += String("-------");
 
   sendServerViewerStatus(statusString);
 }, 30000);
