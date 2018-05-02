@@ -148,7 +148,9 @@ function sendServerViewerStatus(status) {
 
 setInterval(function ping() {
   var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
+    statusString += "Device Names\n"
   statusString += JSON.stringify(connectionDeviceNames,null,'\t') + "\n"
+  statusString += "Pair Codes\n"
   statusString += JSON.stringify(connectionPairCodes,null,'\t') + "\n"
   statusString += String("-------");
 
