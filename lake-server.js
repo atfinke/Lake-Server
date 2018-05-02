@@ -28,9 +28,6 @@ wss.on('connection', function connection(ws) {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         var clientAddress = String(client._socket.remoteAddress);
         if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == senderPairCode) {
-console.log("**");
-          console.log(data);
-          console.log(client);
           client.send(data);
         } else {
           console.log("Sender client mismatch");
@@ -88,7 +85,7 @@ function sendClientConnected(newClientAddress, pairCode) {
         var deviceName = connectionDeviceNames[clientAddress]
         // LAKE_SERVER|Destination|Type|arg1|arg2...
         var key = "LAKE_SERVER|client|newClient|" + deviceName
-        client.send(data);
+        client.send(key);
 
         var statusString = "Sending existing client new client info:";
         statusString += clientAddress;
