@@ -28,8 +28,10 @@
     var HOST = location.origin.replace(/^http/, 'ws')
     var ws = new WebSocket(HOST);
     var element = document.getElementById('output-text');
-
-    ws.send("LAKE_SERVER|SERVER|PAIR_CODE|SERVER_VIEWER|" + String(navigator.userAgent));
+    
+    wss.on('connection', function connection(ws) {
+      ws.send("LAKE_SERVER|SERVER|PAIR_CODE|SERVER_VIEWER|" + String(navigator.userAgent));
+    }
 
     ws.onmessage = function(event) {
       var date = new Date();
