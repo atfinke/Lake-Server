@@ -136,7 +136,7 @@ function sendServerViewerStatus(status) {
     if (client.readyState === WebSocket.OPEN) {
       var clientAddress = String(client._socket.remoteAddress);
       if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == "SERVER_VIEWER") {
-        client.send(status)
+        client.send(message)
       }
     }
   });

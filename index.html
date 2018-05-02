@@ -49,7 +49,7 @@
         element.innerHTML = element.innerHTML + "<br><br>" + newText;
       } else if (event.data.includes('LAKE_SERVER|server|status|')) {
         var newText = dateString + ": " + event.data;
-        element.innerHTML = element.innerHTML + "<br><br>" + newText;
+        element.innerHTML = element.innerHTML + "<br><br>" + newText.replace('LAKE_SERVER|server|status|', '');
       } else {
         console.log(event.data);
       }
