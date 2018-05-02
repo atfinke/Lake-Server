@@ -82,15 +82,15 @@ function sendClientConnected(newClientAddress, pairCode) {
     var clientAddress = String(client._socket.remoteAddress);
     if (client.readyState === WebSocket.OPEN && newClientAddress != clientAddress) {
       if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == pairCode) {
-        var deviceName = connectionDeviceNames[clientAddress]
+        var newDeviceName = connectionDeviceNames[newClientAddress]
         // LAKE_SERVER|Destination|Type|arg1|arg2...
-        var key = "LAKE_SERVER|client|newClient|" + deviceName
+        var key = "LAKE_SERVER|client|newClient|" + newDeviceName
         client.send(key);
 
         var statusString = "Sending existing client new client info:\n";
         statusString += clientAddress + "\n";
-        statusString += deviceName + "\n";
         statusString += newClientAddress + "\n";
+        statusString += newDeviceName + "\n";
         statusString += String("-------") + "\n";
         sendServerViewerStatus(statusString);
       }
