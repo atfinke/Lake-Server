@@ -47,6 +47,9 @@
       } else if (event.data.includes(' Connected')) {
         var newText = dateString + ": " + event.data;
         element.innerHTML = element.innerHTML + "<br><br>" + newText;
+      } else if (event.data.includes('LAKE_SERVER|server|status|')) {
+        var newText = dateString + ": " + event.data;
+        element.innerHTML = element.innerHTML + "<br><br>" + newText;
       } else {
         console.log(event.data);
       }
