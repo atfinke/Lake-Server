@@ -29,6 +29,8 @@
     var ws = new WebSocket(HOST);
     var element = document.getElementById('output-text');
 
+    ws.send("LAKE_SERVER|SERVER|PAIR_CODE|SERVER_VIEWER|" + String(navigator.userAgent));
+
     ws.onmessage = function(event) {
       var date = new Date();
       var dateString = date.toLocaleTimeString();
