@@ -127,14 +127,15 @@ for (var index = 0; index < clientsToRemove.length; index++) {
 
 setInterval(function ping() {
   var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
-  statusString += String(JSON.stringify(connectionDeviceNames)) + "\n"
-  statusString += String(JSON.stringify(connectionPairCodes)) + "\n"
+  statusString += JSON.stringify(connectionDeviceNames) + "\n"
+  statusString += JSON.stringify(connectionPairCodes) + "\n"
   statusString += String("-------")
 
   if (wss.clients.length != 0) {
     console.log(statusString);
     console.log(connectionDeviceNames);
     console.log(connectionPairCodes);
+    console.log(JSON.stringify(connectionPairCodes));
   }
 
   var message = "LAKE_SERVER|server|status|" + statusString;
