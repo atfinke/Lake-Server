@@ -136,7 +136,7 @@ function sendServerViewerStatus(status) {
     if (client.readyState === WebSocket.OPEN) {
       var clientAddress = String(client._socket.remoteAddress);
       if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == "SERVER_VIEWER") {
-        client.send(message)
+        client.send(status)
       }
     }
   });
@@ -148,8 +148,8 @@ function sendServerViewerStatus(status) {
 
 setInterval(function ping() {
   var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
-  statusString += JSON.stringify(connectionDeviceNames) + "\n"
-  statusString += JSON.stringify(connectionPairCodes) + "\n"
+  statusString += JSON.stringify(connectionDeviceNames,null,'\t') + "\n"
+  statusString += JSON.stringify(connectionPairCodes,null,'\t') + "\n"
   statusString += String("-------");
 
   sendServerViewerStatus(statusString);
