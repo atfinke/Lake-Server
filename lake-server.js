@@ -138,8 +138,8 @@ setInterval(function ping() {
   var message = "LAKE_SERVER|server|status|" + statusString;
 
   wss.clients.forEach(function each(client) {
-    var clientAddress = String(client._socket.remoteAddress);
-    if (client.readyState === WebSocket.OPEN && newClientAddress != clientAddress) {
+    if (client.readyState === WebSocket.OPEN) {
+      var clientAddress = String(client._socket.remoteAddress);
       if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == "SERVER_VIEWER") {
         client.send(message)
       }
