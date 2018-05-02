@@ -29,7 +29,7 @@ wss.on('connection', function connection(ws) {
         var clientAddress = String(client._socket.remoteAddress);
         if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == senderPairCode) {
           client.send(data);
-        } else if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] != "SERVER_VIEWER" {
+        } else if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] != "SERVER_VIEWER") {
           console.log("Sender client mismatch");
           console.log(senderPairCode);
           console.log(connectionPairCodes[clientAddress]);
