@@ -29,7 +29,7 @@
     var ws = new WebSocket(HOST);
     var element = document.getElementById('output-text');
 
-    wss.on('connection', function connection(ws) {
+    ws.onconnection = function(event) {
       ws.send("LAKE_SERVER|SERVER|PAIR_CODE|SERVER_VIEWER|" + String(navigator.userAgent));
     });
 
