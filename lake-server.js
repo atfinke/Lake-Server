@@ -20,6 +20,9 @@ var connectionDeviceNames = {};
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
+    if (data == null) {
+      return;
+    }
     var senderPairCode = connectionPairCodes[String(ws._socket.remoteAddress)];
     wss.clients.forEach(function each(client) {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -55,10 +58,10 @@ wss.on('connection', function connection(ws) {
 
               sendClientConnected(clientAddress, pairCode);
 
-              var statusString = "New Pair Code:";
-              statusString += clientAddress;
-              statusString += clientName;
-              statusString += pairCode;
+              var statusString = "New Pair Code:\n";
+              statusString += clientAddress + "\n";
+              statusString += clientName + "\n";
+              statusString += pairCode + "\n";
               statusString += String("-------");
               sendServerViewerStatus(statusString);
 
@@ -109,11 +112,11 @@ const interval = setInterval(function ping() {
       var pairCode = connectionPairCodes[clientAddress];
       var deviceName = connectionDeviceNames[clientAddress];
 
-      var statusString = "CLIENT DISCONNECTED:\n"
-      statusString += clientAddress + "\n"
-      statusString += pairCode + "\n"
-      statusString += deviceName + "\n"
-      statusString += String("-------")
+      var statusString = "CLIENT DISCONNECTED:\n";
+      statusString += clientAddress + "\n";
+      statusString += pairCode + "\n";
+      statusString += deviceName + "\n";
+      statusString += String("-------");
 
       sendServerViewerStatus(statusString);
     }
