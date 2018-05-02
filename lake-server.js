@@ -144,6 +144,6 @@ setInterval(function ping() {
         client.send(message)
       }
     }
-  }
+  });
 
 }, 30000);
