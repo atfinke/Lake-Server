@@ -127,8 +127,8 @@ for (var index = 0; index < clientsToRemove.length; index++) {
 
 setInterval(function ping() {
   var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
-  statusString += String(connectionDeviceNames) + "\n"
-  statusString += String(connectionPairCodes) + "\n"
+  statusString += String(JSON.stringify(connectionDeviceNames)) + "\n"
+  statusString += String(JSON.stringify(connectionPairCodes)) + "\n"
   statusString += String("-------")
 
   if (wss.clients.length != 0) {
