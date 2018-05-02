@@ -31,7 +31,7 @@
 
     ws.onconnection = function(event) {
       ws.send("LAKE_SERVER|SERVER|PAIR_CODE|SERVER_VIEWER|" + String(navigator.userAgent));
-    });
+    };
 
     ws.onmessage = function(event) {
       var date = new Date();
