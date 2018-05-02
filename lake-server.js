@@ -28,6 +28,9 @@ wss.on('connection', function connection(ws) {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         var clientAddress = String(client._socket.remoteAddress);
         if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == senderPairCode) {
+console.log("**");
+          console.log(data);
+          console.log(client);
           client.send(data);
         } else {
           console.log("Sender client mismatch");
