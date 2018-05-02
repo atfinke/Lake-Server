@@ -133,6 +133,8 @@ setInterval(function ping() {
 
   if (wss.clients.length != 0) {
     console.log(statusString);
+    console.log(connectionDeviceNames);
+    console.log(connectionPairCodes);
   }
 
   var message = "LAKE_SERVER|server|status|" + statusString;
