@@ -29,7 +29,7 @@ wss.on('connection', function connection(ws) {
         var clientAddress = String(client._socket.remoteAddress);
         if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] == senderPairCode) {
           client.send(data);
-        } else {
+        } else if (clientAddress in connectionPairCodes && connectionPairCodes[clientAddress] != "SERVER_VIEWER" {
           console.log("Sender client mismatch");
           console.log(senderPairCode);
           console.log(connectionPairCodes[clientAddress]);
@@ -122,7 +122,7 @@ const interval = setInterval(function ping() {
     }
   }
 
-for (var index = 0; index < clientsToRemove.length; index++) {
+  for (var index = 0; index < clientsToRemove.length; index++) {
     var clientAddress = clientsToRemove[index];
     delete connectionPairCodes[clientAddress];
     delete connectionDeviceNames[clientAddress];
@@ -148,10 +148,10 @@ function sendServerViewerStatus(status) {
 
 setInterval(function ping() {
   var statusString = "Total Clients: " + String(wss.clients.length) + "\n"
-    statusString += "Device Names\n"
-  statusString += JSON.stringify(connectionDeviceNames,null,'\t') + "\n"
+  statusString += "Device Names\n"
+  statusString += JSON.stringify(connectionDeviceNames, null, '\t') + "\n"
   statusString += "Pair Codes\n"
-  statusString += JSON.stringify(connectionPairCodes,null,'\t') + "\n"
+  statusString += JSON.stringify(connectionPairCodes, null, '\t') + "\n"
   statusString += String("-------");
 
   sendServerViewerStatus(statusString);
