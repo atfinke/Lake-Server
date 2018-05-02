@@ -87,10 +87,11 @@ function sendClientConnected(newClientAddress, pairCode) {
         var key = "LAKE_SERVER|client|newClient|" + deviceName
         client.send(key);
 
-        var statusString = "Sending existing client new client info:";
-        statusString += clientAddress;
-        statusString += newClientAddress;
-        statusString += String("-------");
+        var statusString = "Sending existing client new client info:\n";
+        statusString += clientAddress + "\n";
+        statusString += deviceName + "\n";
+        statusString += newClientAddress + "\n";
+        statusString += String("-------") + "\n";
         sendServerViewerStatus(statusString);
       }
     }
